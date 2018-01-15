@@ -9,15 +9,17 @@ export default function combineReducers(reducers){
   }
   return function(state={},action){
     //let finalReducerKeys = Object.keys(finalReducer);
+  //  console.log("我被执行cr")
     for(let key in finalReducer){
       let currentReducer = finalReducer[key];
       let currentState = state[key];
-      let nextState = currentReducer(currentState,currentReducer);
+      let nextState = currentReducer(currentState,action);
+      //console.log(nextState,"!!!!")
       if(nextState===undefined){
         throw Error("reducer结果不能为undefined")
       }
       state[key]=nextState;
     }
-    return state;
+    return Object.assign({},state);
   }
 }
